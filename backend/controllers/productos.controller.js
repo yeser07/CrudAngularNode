@@ -40,9 +40,9 @@ var controller = {
         });
     },
 
-    obtenerProdutos: function(req, res) {
+    obtenerProductos: function(req, res) {
 
-        Productos.find({})((err, productos) => {
+        Productos.find((err, productos) => {
 
             if (err) return res.status(500).send({ message: 'Error al devolver los datos.' });
 
@@ -57,7 +57,7 @@ var controller = {
         var productoId = req.params.id;
         var update = req.body;
 
-        Productos.findByIdAndUpdate(productoId, update, { new: true }, (err, productoActualizado) => {
+        Productos.findOneAndUpdate(productoId, update, { new: true }, (err, productoActualizado) => {
             if (err) return res.status(500).send({ message: 'Error al actualizar' });
 
             if (!productoActualizado) return res.status(404).send({ message: 'No existe el producto para actualizar' });
@@ -72,7 +72,7 @@ var controller = {
     eliminarProducto: function(req, res) {
         var productoId = req.params.id;
 
-        Productos.findByIdAndRemove(productoId, (err, productoEliminado) => {
+        Productos.findByIdAndDelete(productoId, (err, productoEliminado) => {
             if (err) return res.status(500).send({ message: 'No se ha podido borrar el producto' });
 
             if (!productoEliminado) return res.status(404).send({ message: "No se puede eliminar ese producto." });
