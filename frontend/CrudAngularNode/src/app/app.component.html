@@ -4,106 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crud Node Angular</title>
+    <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-
 
 </head>
 
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-          </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="card text-center">
+                        <div class="card-body">
+
+                            <form #frmProducto="ngForm">
+                                <h3>Registro de Productos</h3>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" #descripcion="ngModel" name="descripcion" placeholder="Descripcion" [(ngModel)]="registroProducto.descripcion">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" #categoria="ngModel" name="categoria" placeholder="Categoria" [(ngModel)]="registroProducto.categoria">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" #precio="ngModel" name="precio" placeholder="Precio" [(ngModel)]="registroProducto.precio">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" #cantidad="ngModel" name="cantidad" placeholder="Cantidad" [(ngModel)]="registroProducto.cantidad">
+                                </div>
+                                <button type="button" class="btn btn-outline-dark" (click)="guardarProducto(frmProducto)">Agregar</button>
+                            </form>
+                        </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+                </div>
+                <div class="col-md-7 table-responsive">
+                    <table title="title">
+                        <h3 class="text-center">Lista de Productos</h3>
+                    </table>
+                    <table class="table table-bordered table-hover ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Descripcion</th>
+                                <th class="text-center">Categoria</th>
+                                <th class="text-center">Precio</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Acciones</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <table width="100%">
-                    <tr>
-                        <td width="80%" class="text-center">
-                            <h2 style="margin: 0px !important;">Mantenimiento de Productos</h2>
-                        </td>
-                        <td width="20%">
-                            <div #openServicioForm class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#ServiciosForm">Agregar</div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12">
-                        <table class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <td class="text-center">Descripcion</td>
-                                    <td class="text-center">Categoria</td>
-                                    <td class="text-center">Cantidad</td>
-                                    <td class="text-center">Precio</td>
-                                    <td>Acciones</td>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr *ngFor="let producto of listaProductos" class="text-center">
+                                <td>{{producto.descripcion}}</td>
+                                <td>{{producto.Categoria}}</td>
+                                <td>{{producto.cantidad}}</td>
+                                <td>{{producto.precio}}</td>
                                 <td>
-                                    <div class="btn-group " role="group">
-                                        <button type="button" class="btn btn-sm btn-outline-danger">Eliminar</button>
-                                        <button type="button" class="btn btn-sm btn-outline-warning">Editar</button>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" id="editar" (click)="ObtenerProducto(producto._id)">Editar</button>
+                                        <button type=" button " class="btn btn-sm btn-outline-warning " id="eliminar " (click)="eliminarProducto(producto._id) ">Eliminar</button>
                                     </div>
                                 </td>
-                            </tbody>
-                        </table>
-                    </div>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-
+    </section>
+    <script src=" https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js " integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo " crossorigin="anonymous "></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js " integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI " crossorigin="anonymous "></script>
 </body>
-
-
-
-
-
-
-
 
 </html>
