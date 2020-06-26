@@ -21,6 +21,10 @@
                             <form #frmProducto="ngForm">
                                 <h3>Registro de Productos</h3>
                                 <div class="form-group">
+                                    <input class="form-control" type="hidden" #_id="ngModel" name="_id" [(ngModel)]="registroProducto._id">
+                                </div>
+
+                                <div class="form-group">
                                     <input class="form-control" type="text" #descripcion="ngModel" name="descripcion" placeholder="Descripcion" [(ngModel)]="registroProducto.descripcion">
                                 </div>
                                 <div class="form-group">

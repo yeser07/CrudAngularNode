@@ -54,44 +54,18 @@ var controller = {
     },
 
     editarProducto: function(req, res) {
-        var producto = new Productos();
-        var productoId = req.params.id;
+        var producto_id = req.params.id;
         var update = req.body;
+        console.log(producto_id);
 
-        producto.descripcion = update.descripcion;
-        producto.categoria = update.categoria;
-        producto.cantidad = update.cantidad;
-        producto.precio = update.precio;
+        Productos.findByIdAndUpdate(producto_id, update, { new: true }, (err, productoUpdated) => {
+            if (err) return res.status(500).send({ message: 'Error al actualizar' });
 
-        Productos.findById(productoId, (err) => {
+            if (!productoUpdated) return res.status(404).send({ message: 'No existe el producto para actualizar' });
 
-            if (productoId) {
-                Productos.findByIdAndDelete(productoId);
-                producto.save((err, productoEditado) => {
-                    if (err) return res.status(500).send({
-                        class: 'error',
-                        message: 'Error al editar el documento.'
-                    });
-
-                    if (!productoEditado) return res.status(404).send({
-                        class: 'error',
-                        message: 'No se ha podido guardar el producto.'
-                    });
-
-                    return res.status(200).send({
-                            class: 'success',
-                            message: 'Producto Editado'
-                        },
-                        productoEditado);
-                });
-
-            } else {
-                res.status(500).send({
-                    class: 'error',
-                    message: 'Ocurrio un error' + err
-                })
-            }
-
+            return res.status(200).send(
+                productoUpdated
+            );
         });
     },
 

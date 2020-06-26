@@ -50,6 +50,7 @@ export class AppComponent {
               text: 'Se registro el Producto Correctamente!',
             })
             this.ObtenerListaProductos();
+            form.reset();
 			},
 			error => {
         Swal.fire({
@@ -62,23 +63,14 @@ export class AppComponent {
    }else{
     this.appService.editarProducto(this.registroProducto).subscribe(
       data => {
-        console.log(data);
-        if (data.class==='success'){
+
           Swal.fire({
             icon: 'success',
             title: 'Operacion Exitosa',
             text: 'Se ha actualizado el Producto Correctamente!',
           })
           this.ObtenerListaProductos();
-
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: data.message
-          })
-          
-        }
+          form.reset();
         },
         error => {
           console.log(error);
@@ -119,7 +111,7 @@ export class AppComponent {
 
 
 
-  
+
   ObtenerProducto(id) {
     this.appService.obtenerProducto(id).subscribe(data => {
       console.log(data);
